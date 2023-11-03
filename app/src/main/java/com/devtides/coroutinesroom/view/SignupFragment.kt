@@ -8,25 +8,26 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
-import com.devtides.coroutinesroom.R
+import com.devtides.coroutinesroom.databinding.FragmentSignupBinding
 import com.devtides.coroutinesroom.viewmodel.SignupViewModel
-import kotlinx.android.synthetic.main.fragment_signup.*
 
 class SignupFragment : Fragment() {
 
     private lateinit var viewModel: SignupViewModel
+    private lateinit var binding : FragmentSignupBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_signup, container, false)
+    ): View {
+        binding = FragmentSignupBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        signupBtn.setOnClickListener { onSignup(it) }
-        gotoLoginBtn.setOnClickListener { onGotoLogin(it) }
+        binding.signupBtn.setOnClickListener { onSignup(it) }
+        binding.gotoLoginBtn.setOnClickListener { onGotoLogin(it) }
 
         viewModel = ViewModelProviders.of(this).get(SignupViewModel::class.java)
         observeViewModel()

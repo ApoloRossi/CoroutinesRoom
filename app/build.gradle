@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 33
@@ -20,6 +21,9 @@ android {
 
     namespace 'com.devtides.coroutinesroom'
 
+    viewBinding {
+          enabled = true
+     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -31,8 +35,6 @@ android {
         apiVersion = '1.4'
         languageVersion = '1.4'
     }
-
-
 }
 
 def nav_version = "2.1.0"

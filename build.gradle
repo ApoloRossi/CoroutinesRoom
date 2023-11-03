@@ -5,7 +5,6 @@ buildscript {
         google()
         jcenter()
     }
-
     def nav_version = "2.5.0"
 
     dependencies {
