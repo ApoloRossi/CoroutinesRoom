@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -16,7 +17,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
 
-    private lateinit var binding : FragmentLoginBinding
+    private lateinit var binding: FragmentLoginBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,18 +39,25 @@ class LoginFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.loginComplete.observe(this, Observer { isComplete ->
-
+            val action = LoginFragmentDirections.actionGoToMain()
+            Navigation.findNavController(binding.loginBtn).navigate(action)
         })
 
         viewModel.error.observe(this, Observer { error ->
-
-
+            Toast.makeText(activity, "Error: $error", Toast.LENGTH_SHORT).show()
         })
     }
 
     private fun onLogin(v: View) {
-        val action = LoginFragmentDirections.actionGoToMain()
-        Navigation.findNavController(v).navigate(action)
+        val userName = binding.loginUsername.text.toString()
+        val password = binding.loginPassword.text.toString()
+        if (userName.isEmpty() || password.isEmpty()) {
+            Toast.makeText(activity, "Please enter all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+        viewModel.login(
+            userName, password
+        )
     }
 
     private fun onGotoSignup(v: View) {
